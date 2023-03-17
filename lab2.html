@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>cse5542 project1 &mdash; Simple 2D Drawing </title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="MatrixArithmetic.js"></script>
+
+
+<!--  ************** Fragment Shader ************* --> 
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec4 vColor; 
+
+    void main(void) {
+            gl_FragColor = vColor; 
+        }
+</script>
+<!--  ************** Vertex Shader ************* --> 
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;   // two array buffer VBOs - position and color attributes 
+    attribute vec3 aVertexColor;
+    varying vec4 vColor;  // this is a varying which will be interpolated to the fragments 
+
+    uniform mat4 uMVMatrix;
+    
+        void main(void) {
+            gl_PointSize = 10.0;
+
+          gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
+          vColor = vec4(aVertexColor, 1.0);   // pass the vertex color as a varying variable
+        }
+
+    // by pass the vertex coordinates; all need to be in [-1,-1] to be vislble 
+</script>
+
+<script type="text/javascript" src="shaders_setup.js"></script>
+<script type="text/javascript" src="simple-2d-drawing.js"></script>
+<script type="text/javascript" src="shape_VBO.js"></script>
+<script type="text/javascript" src="PointShape.js"></script>
+<script type="text/javascript" src="HorizontalLineShape.js"></script>
+<script type="text/javascript" src="VerticalLineShape.js"></script>
+<script type="text/javascript" src="TriangleShape.js"></script>
+<script type="text/javascript" src="SquareShape.js"></script>
+<script type="text/javascript" src="CircleShape.js"></script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+
+    <canvas id="lab1-canvas" style="border: none;" width="700" height="700"></canvas>
+
+
+
+    <br/>
+    <br/>
+    <h4>
+        Press keys p, h, v, t, and q, to specify whether you want to draw a point, horizontal line, vertical line, triangle, or square, respectively
+    <br/>
+        Press keys r, g, b to indicate the color of the shapes that will be drawn from now on in red, green, or blue, respectively    
+    </h4>
+
+</body>
+
+
+</html>
+
